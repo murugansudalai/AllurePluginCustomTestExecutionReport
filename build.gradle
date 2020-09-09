@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.5"
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'io.qameta.allure'
+
+repositories {
+    jcenter()
+}
+allure {
+    version = '2.6.0'
+    aspectjweaver = true
+}
+import io.qameta.allure.gradle.task.AllureReport
+
+task allureAggregatedReport(type: AllureReport) {
+    resultsDirs = subprojects.allure.resultsDir
+}
+
+dependencies {
+    compile 'io.cucumber:gherkin:5.1.0'
+    compile 'io.cucumber:cucumber-core:4.2.0'
+    compile 'io.cucumber:cucumber-java:4.2.0'
+    compile 'io.cucumber:cucumber-junit:4.2.0'
+    compile 'io.qameta.allure:allure-gradle:2.3'
+    compile 'io.qameta.allure:allure-cucumber4-jvm:2.13.1'
+    testCompile 'junit:junit:4.12'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium.core', name: 'selenium-core', version: '1.0.1'
+
+    //All plugins related dependencies
+
+    compile group: 'io.qameta.allure', name: 'allure-plugin-api', version: '2.13.0'
+    compile group: 'net.masterthought', name: 'cucumber-reporting', version: '5.3.0'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+// https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+    compile group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
+// https://mvnrepository.com/artifact/org.apache.clerezza.ext/org.json.simple
+    compile group: 'org.apache.clerezza.ext', name: 'org.json.simple', version: '0.4'
+// https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+
+
+}
+
+test {
+    useTestNG()
+}
